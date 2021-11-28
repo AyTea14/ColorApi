@@ -17,11 +17,21 @@ app.get("/", (request, response) => {
         .end("Welcome to ColorAPI! For documentation and info go to https://colorapi.advaith.fun kthx");
 });
 
-app.get("/*/*.svg", (request, response) => {
+app.get("/*.svg", (request, response) => {
     let data = request.originalUrl.split("/");
     const [, ...mydata] = data;
-    const [x, y] = mydata[0].split("x");
-    const hex = mydata[1].replace(".svg", "");
+    let size, hex;
+    if (mydata.length > 1)
+        mydata.filter((word, index) => {
+            if (/x/g.test(word)) return (size = index);
+        });
+    mydata.filter((word, index) => {
+        if (word.match(/\.svg/g)) return (hex = word.replace(/\.svg/g, ""));
+        else return (hex = null);
+    });
+
+    size = size == 0 ? (size = mydata[size]) : (size = "256x256");
+    const [x, y] = size.split("x");
 
     // const hex = request.originalUrl.replace("/", "").replace(".svg", "");
 
@@ -36,8 +46,18 @@ app.get("/*/*.svg", (request, response) => {
 app.get("/*.webp", async (request, response) => {
     let data = request.originalUrl.split("/");
     const [, ...mydata] = data;
-    const [x, y] = mydata[0].split("x");
-    const hex = mydata[1].replace(".webp", "");
+    let size, hex;
+    if (mydata.length > 1)
+        mydata.filter((word, index) => {
+            if (/x/g.test(word)) return (size = index);
+        });
+    mydata.filter((word, index) => {
+        if (word.match(/\.webp/g)) return (hex = word.replace(/\.webp/g, ""));
+        else return (hex = null);
+    });
+
+    size = size == 0 ? (size = mydata[size]) : (size = "256x256");
+    const [x, y] = size.split("x");
 
     // const hex = request.originalUrl.replace("/", "").replace(".webp", "").replace("#", "");
 
@@ -51,15 +71,25 @@ app.get("/*.webp", async (request, response) => {
     response.status(200).set("Content-Type", "image/webp").end(image);
 });
 
-app.get("/*/*.png", async (request, response) => {
+app.get("/*.png", async (request, response) => {
     let data = request.originalUrl.split("/");
     const [, ...mydata] = data;
-    const [x, y] = mydata[0].split("x");
-    const hex = mydata[1].replace(".png", "");
+    let size, hex;
+    if (mydata.length > 1)
+        mydata.filter((word, index) => {
+            if (/x/g.test(word)) return (size = index);
+        });
+    mydata.filter((word, index) => {
+        if (word.match(/\.png/g)) return (hex = word.replace(/\.png/g, ""));
+        else return (hex = null);
+    });
+
+    size = size == 0 ? (size = mydata[size]) : (size = "256x256");
+    const [x, y] = size.split("x");
 
     const image = await svgToImg
         .from(
-            `<svg xmlns="http://www.w3.org/2000/svg" width="${x}" height="${y}"><rect fill="#${hex}" x="0" y="0" width="256" height="256"></rect></svg>`
+            `<svg xmlns="http://www.w3.org/2000/svg" width="${x}" height="${y}"><rect fill="#${hex}" x="0" y="0" width="${x}" height="${y}"></rect></svg>`
         )
         .toPng()
         .catch((error) => response.status(500).set("Content-Type", "text/plain").end(String(error)));
@@ -67,11 +97,21 @@ app.get("/*/*.png", async (request, response) => {
     response.status(200).set("Content-Type", "image/png").end(image);
 });
 
-app.get("/*/*.jpeg", async (request, response) => {
+app.get("/*.jpeg", async (request, response) => {
     let data = request.originalUrl.split("/");
     const [, ...mydata] = data;
-    const [x, y] = mydata[0].split("x");
-    const hex = mydata[1].replace(".jpeg", "");
+    let size, hex;
+    if (mydata.length > 1)
+        mydata.filter((word, index) => {
+            if (/x/g.test(word)) return (size = index);
+        });
+    mydata.filter((word, index) => {
+        if (word.match(/\.jpeg/g)) return (hex = word.replace(/\.jpeg/g, ""));
+        else return (hex = null);
+    });
+
+    size = size == 0 ? (size = mydata[size]) : (size = "256x256");
+    const [x, y] = size.split("x");
 
     const image = await svgToImg
         .from(
@@ -83,11 +123,21 @@ app.get("/*/*.jpeg", async (request, response) => {
     response.status(200).set("Content-Type", "image/jpeg").end(image);
 });
 
-app.get("/*/*.jpg", async (request, response) => {
+app.get("/*.jpg", async (request, response) => {
     let data = request.originalUrl.split("/");
     const [, ...mydata] = data;
-    const [x, y] = mydata[0].split("x");
-    const hex = mydata[1].replace(".jpg", "");
+    let size, hex;
+    if (mydata.length > 1)
+        mydata.filter((word, index) => {
+            if (/x/g.test(word)) return (size = index);
+        });
+    mydata.filter((word, index) => {
+        if (word.match(/\.jpg/g)) return (hex = word.replace(/\.jpg/g, ""));
+        else return (hex = null);
+    });
+
+    size = size == 0 ? (size = mydata[size]) : (size = "256x256");
+    const [x, y] = size.split("x");
 
     const image = await svgToImg
         .from(
