@@ -14,13 +14,16 @@ ColorAPI shows a square image for any hex code provided.
 ColorAPI uses the following URL structure:
 
 ```
-https://color.aytea.ml/HEXCODE.FILETYPE
+https://color.aytea.ml/SIZE/HEXCODE.FILETYPE
+
+// SIZE is optional
 ```
 
 For example:
 
 ```
 https://color.aytea.ml/fff.webp
+https://color.aytea.ml/600x300/fff.webp
 ```
 
 ## How it works
