@@ -14,7 +14,7 @@ app.get("/", (request, response) => {
     response
         .status(200)
         .set("Content-Type", "text/plain")
-        .end("Welcome to ColorAPI! For documentation and info go to https://colorapi.advaith.fun kthx");
+        .end("Welcome to ColorAPI! For documentation and info go to https://aytea14.github.io/ColorApi kthx");
 });
 
 app.get("/*.svg", (request, response) => {
@@ -32,8 +32,6 @@ app.get("/*.svg", (request, response) => {
 
     size = size == 0 ? (size = mydata[size]) : (size = "256x256");
     const [x, y] = size.split("x");
-
-    // const hex = request.originalUrl.replace("/", "").replace(".svg", "");
 
     response
         .status(200)
@@ -58,8 +56,6 @@ app.get("/*.webp", async (request, response) => {
 
     size = size == 0 ? (size = mydata[size]) : (size = "256x256");
     const [x, y] = size.split("x");
-
-    // const hex = request.originalUrl.replace("/", "").replace(".webp", "").replace("#", "");
 
     const image = await svgToImg
         .from(
