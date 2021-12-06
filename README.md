@@ -14,13 +14,13 @@ ColorAPI shows a square image for any hex code provided.
 ColorAPI uses the following URL structure:
 
 ```
-https://colorapi.glitch.me/HEXCODE.FILETYPE
+https://color.aytea.ml/HEXCODE.FILETYPE
 ```
 
 For example:
 
 ```
-https://colorapi.glitch.me/fff.webp
+https://color.aytea.ml/fff.webp
 ```
 
 ## How it works
