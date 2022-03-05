@@ -93,7 +93,7 @@ app.get("/*.png", async (request, response) => {
     response.status(200).set("Content-Type", "image/png").end(image);
 });
 
-app.get("/*.jpeg", async (request, response) => {
+app.get("/*.jpe?g", async (request, response) => {
     let data = request.originalUrl.split("/");
     const [, ...mydata] = data;
     let size, hex;
@@ -102,33 +102,7 @@ app.get("/*.jpeg", async (request, response) => {
             if (/x/g.test(word)) return (size = index);
         });
     mydata.filter((word, index) => {
-        if (word.match(/\.jpeg/g)) return (hex = word.replace(/\.jpeg/g, ""));
-        else return (hex = null);
-    });
-
-    size = size == 0 ? (size = mydata[size]) : (size = "256x256");
-    const [x, y] = size.split("x");
-
-    const image = await svgToImg
-        .from(
-            `<svg xmlns="http://www.w3.org/2000/svg" width="${x}" height="${y}"><rect fill="#${hex}" x="0" y="0" width="${x}" height="${y}"></rect></svg>`
-        )
-        .toJpeg()
-        .catch((error) => response.status(500).set("Content-Type", "text/plain").end(String(error)));
-
-    response.status(200).set("Content-Type", "image/jpeg").end(image);
-});
-
-app.get("/*.jpg", async (request, response) => {
-    let data = request.originalUrl.split("/");
-    const [, ...mydata] = data;
-    let size, hex;
-    if (mydata.length > 1)
-        mydata.filter((word, index) => {
-            if (/x/g.test(word)) return (size = index);
-        });
-    mydata.filter((word, index) => {
-        if (word.match(/\.jpg/g)) return (hex = word.replace(/\.jpg/g, ""));
+        if (word.match(/\.jpe?g/g)) return (hex = word.replace(/\.jpe?g/g, ""));
         else return (hex = null);
     });
 
@@ -146,11 +120,8 @@ app.get("/*.jpg", async (request, response) => {
 });
 
 // 404 PAGE
-app.use(function (request, response) {
-    response
-        .status(404)
-        .set("Content-Type", "text/plain")
-        .end("Looks like there was an error in your URL. 404 page not found");
+app.use((request, response) => {
+    response.status(404).set("Content-Type", "text/plain").end("Looks like there was an error in your URL. 404 page not found");
 });
 
 app.listen(process.env["PORT"] || 3000);
